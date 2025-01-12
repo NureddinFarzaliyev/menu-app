@@ -1,31 +1,14 @@
-import { MongoClient, ServerApiVersion } from 'mongodb';
+import mongoose from 'mongoose'
+import dotenv from 'dotenv'
+dotenv.config();
 
-import { configDotenv } from 'dotenv';
-configDotenv();
-
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@menuapp.ootv7.mongodb.net/?retryWrites=true&w=majority&appName=menuapp`;
-
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
-
-export const connectDB = () => {
-    async function run() {
-        try {
-          // Connect the client to the server	(optional starting in v4.7)
-          await client.connect();
-          // Send a ping to confirm a successful connection
-          await client.db("admin").command({ ping: 1 });
-          console.log("Pinged your deployment. You successfully connected to MongoDB!");
-        } finally {
-          // Ensures that the client will close when you finish/error
-          await client.close();
-        }
-      }
-      run().catch(console.dir);
+const connectDB = async () => {
+    try {
+        await mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@menuapp.ootv7.mongodb.net/menuapp?retryWrites=true&w=majority&appName=menuapp`)
+        console.log('Connected to mongoDB')
+    } catch (error) {
+        console.log('Error in MongoDB connection', error.message)        
+    }
 }
+
+export default connectDB

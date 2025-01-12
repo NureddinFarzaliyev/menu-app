@@ -1,6 +1,6 @@
 import express from 'express';
 import 'dotenv/config';
-import { connectDB } from './db/connect.js';
+import connectDB from './db/connect.js';
 
 // Import routes
 import authRoutes from './routes/auth.routes.js';
@@ -16,7 +16,11 @@ app.use(express.json())
 app.get('/', (req, res) => res.send('Hello World!'))
 app.use('/auth', authRoutes)
 
-app.listen(port, () => {
-    connectDB();
-    console.log(`Example app listening at http://localhost:${port}`)
-})
+const startServer = async () => {
+    await connectDB();
+    app.listen(port, () => {
+        console.log(`Example app listening at http://localhost:${port}`)
+    });
+};
+  
+startServer();
