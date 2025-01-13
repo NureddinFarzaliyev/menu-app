@@ -1,4 +1,4 @@
-import jwt, { decode } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
 export const requireAuth = (req, res, next) => {
     const token = req.cookies.jwt;
@@ -7,14 +7,14 @@ export const requireAuth = (req, res, next) => {
         jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
             if(err){
                 console.log(err.message)
-                res.status(401).json({message: "Unauthorized"})
+                res.status(401).json({unathorized: "Unauthorized"})
             }else {
                 console.log(decodedToken)
                 next();
             }
         })
     }else {
-        res.status(401).json({message: "Unauthorized"})
+        res.status(401).json({unathorized: "Unauthorized"})
     }
 }
 

@@ -1,3 +1,5 @@
+# Auth Error Handling
+
 Registration success
 ```
 {
@@ -30,6 +32,12 @@ Login Failed
     }
 }
 ``` 
+Auth Failed
+```
+{
+    unauthorized: "Unauthorized"
+}
+```
 
 
 Features: 
@@ -40,5 +48,3 @@ Features:
 - Email validation with validator
 - Hashing password using bcryptjs and mongoose middlewares
 - JWT Authentication with cookies
-
-
