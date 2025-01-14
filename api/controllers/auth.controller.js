@@ -68,8 +68,8 @@ export const signupController = async (req, res) => {
         const user = await User.create({username: req.body.username, password: req.body.password, email: req.body.email})
         const token = createToken({id: user._id})
         res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge * 1000, sameSite: 'None', secure: true})
-        res.json({user: user._id})
-
+        res.json({user: user._id, verified: user.verified})
+        // send verification email
         const emailToken = createToken({email: user.email})
         sendVerificationEmail(user.email, emailToken)
     } catch (err) {
@@ -88,8 +88,7 @@ export const loginController = async (req, res) => {
             if(pass) {
                 const token = createToken({id: existingUser._id})
                 res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge * 1000, sameSite: 'None', secure: true})
-                res.json({user: existingUser._id})
-
+                res.json({user: existingUser._id, verified: existingUser.verified})
             }else {
                 throw new Error("Invalid email or password");
             }
@@ -104,16 +103,14 @@ export const loginController = async (req, res) => {
 
 export const logoutController = (req, res) => {
     res.cookie('jwt', '', {maxAge: 1, sameSite: 'None', secure: true})
-    res.send({message: "User logged out"})
+    res.send({message: "User logged out", loggedOut: true})
 }
 
 export const verificationController = async (req, res) => {
     try {
         const token = req.body.token;
 
-        if(!token){
-            return res.status(401).json({verified: false, message: "No token provided"})
-        }
+        if(!token){return res.status(401).json({verified: false, message: "No token provided"})}
 
         jwt.verify(token, process.env.JWT_SECRET, async (err, verified) => {
             if(err) {return res.status(401).json({verified: false, message: "Invalid token"})}
@@ -121,6 +118,7 @@ export const verificationController = async (req, res) => {
             const user = await User.findOne({email: verified.email})
 
             if(!user) {return res.status(401).json({verified: false, message: "User not found"})}
+
             if(user.verified){return res.status(401).json({verified: false, message: "User already verified"})}
 
             await user.updateOne({verified: true})
@@ -128,5 +126,28 @@ export const verificationController = async (req, res) => {
         })
     } catch (error) {
         res.status(500).json({verified: false, message: "Server Error"})
+    }
+}
+
+export const checkController = async (req, res) => {
+    const token = req.cookies.jwt;
+    let userId;
+
+    if(token){
+        jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
+            if(err){
+                return res.status(401).json({unathorized: "Unauthorized"})
+            }
+            userId = decodedToken.id;
+        })
+
+        if(!userId){
+            return res.status(401).json({unathorized: "Unauthorized"})
+        }
+
+        const user = await User.findById(userId)
+        res.status(200).json({authorized: true, userId: userId, verified: user.verified})
+    }else{
+        res.status(401).json({unathorized: "Unauthorized"})
     }
 }

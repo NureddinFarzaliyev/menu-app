@@ -3,7 +3,8 @@
 Registration success
 ```
 {
-    user: userid
+    user: userid,
+    verified: boolean
 }
 ```
 Registration failed
@@ -19,7 +20,8 @@ Registration failed
 Login success
 ```
 {
-    user: userid
+    user: userid,
+    verified: boolean
 }
 ```
 Login Failed
@@ -38,7 +40,20 @@ Auth Failed
     unauthorized: "Unauthorized"
 }
 ```
-
+Email Verification Success
+```
+{
+    verified: true, 
+    message: "User verified"
+}
+```
+Email Verification Error 
+```
+{
+    verified: false, 
+    message: "User already verified"
+}
+```
 
 Features: 
 
@@ -48,3 +63,5 @@ Features:
 - Email validation with validator
 - Hashing password using bcryptjs and mongoose middlewares
 - JWT Authentication with cookies
+- email verification system with nodemailer and JWT
+- server side & client side route protecting
