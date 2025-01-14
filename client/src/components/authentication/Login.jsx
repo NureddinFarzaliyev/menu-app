@@ -9,8 +9,8 @@ const Login = () => {
     
     // TODO: Seperate the logic
     const checkIfLoggedIn = (response) => {
-        if(response.errors){
-            console.log(response.errors.credentials ? response.errors.credentials : response.errors)
+        if(response.error){
+            console.log(response.error.credentials ? response.error.credentials : response.error)
         }else if (response.user){
             if(response.verified){
                 window.location.href = '/dashboard'

@@ -9,8 +9,8 @@ const Signup = () => {
 
   // TODO: combine this logic with signip
   const checkIfLoggedIn = (response) => {
-    if(response.errors){
-        console.log(response.errors.credentials ? response.errors.credentials : response.errors)
+    if(response.error){
+        console.log(response.error)
     }else if (response.user){
         if(response.verified){
             window.location.href = '/dashboard'

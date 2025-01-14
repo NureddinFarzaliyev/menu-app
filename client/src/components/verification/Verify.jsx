@@ -9,7 +9,11 @@ const Verify = () => {
 
     const changeVerificationMessage = (verificationResponse) => {
       // TODO: Handle errors
+      if(verificationResponse.error){
+        setVerificationMessage(`Error: ${verificationResponse.error}`)
+      }else{
         setVerificationMessage(verificationResponse.message)
+      }
     }
 
     useEffect(() => {
