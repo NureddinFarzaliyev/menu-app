@@ -3,19 +3,23 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 
+// TODO: VALID ERROR AND SUCCESS TYPES FOR ALL ERRORS
+
 export const testController = (req, res) => {
     res.send('Hello Auth')
 }
 
 const maxAge = 3 * 24 * 60 * 60;
 
+// TODO: Extract to utils
 const createToken = (payload) => {
     return jwt.sign(payload, process.env.JWT_SECRET, {
         expiresIn: maxAge,
     })
 }
 
-const sendVerificationEmail = async (email, token) => {
+// TODO: extract to utils
+const sendEmail = async (email, content) => {
     const transporter = nodemailer.createTransport({
         host: process.env.SMTP_HOST,
         port: process.env.SMTP_PORT,
@@ -29,8 +33,7 @@ const sendVerificationEmail = async (email, token) => {
     const sent = await transporter.sendMail({
         from: process.env.SMTP_SENDER,
         to: email,
-        subject: "Verify your email",
-        text: `Click this link to verify your email: ${process.env.CLIENT_ORIGIN}/verify/${token}`
+        ...content,
     })
 
     console.log(sent.messageId)
@@ -71,7 +74,10 @@ export const signupController = async (req, res) => {
         res.json({user: user._id, verified: user.verified})
         // send verification email
         const emailToken = createToken({email: user.email})
-        sendVerificationEmail(user.email, emailToken)
+        sendEmail(user.email, {
+            subject: "Verify your email",
+            text: `Click this link to verify your email: ${process.env.CLIENT_ORIGIN}/verify/${emailToken}`
+        })
     } catch (err) {
         const errors = handleErrors(err)
         res.status(400).json({errors})
@@ -146,8 +152,52 @@ export const checkController = async (req, res) => {
         }
 
         const user = await User.findById(userId)
-        res.status(200).json({authorized: true, userId: userId, verified: user.verified})
+        res.status(200).json({authorized: true, userId: userId, verified: user?.verified})
     }else{
         res.status(401).json({unathorized: "Unauthorized"})
+    }
+}
+
+export const resetRequestController = async (req, res) => {
+    try {
+        const user = await User.findOne({email: req.body.email})
+
+        if(!user){
+            return res.status(404).json({message: "User not found"})
+        }
+
+        const token = createToken({email: user.email, purpose: "reset"})
+        
+        sendEmail(user.email, {
+            subject: "Reset Password",
+            text: `Click this link to reset your password: ${process.env.CLIENT_ORIGIN}/reset/${token}`
+        })
+
+        res.json({message: "Reset email sent"})
+    } catch (error) {
+        res.json({message: error.message})
+    }
+}
+
+export const resetController = async (req, res) => {
+    try {
+        jwt.verify(req.params.token, process.env.JWT_SECRET, async (err, decodedToken) => {
+            if(err){
+                return res.status(401).json({message: "Invalid token"})
+            }
+
+            const user = await User.findOne({email: decodedToken.email})
+
+            if(!user){
+                return res.status(404).json({message: "User not found"})
+            }
+
+            user.password = req.body.password;
+            await user.save();
+
+            res.json({message: "Password reset"})
+        })
+    } catch (error) {
+        res.json({message: error.message})
     }
 }

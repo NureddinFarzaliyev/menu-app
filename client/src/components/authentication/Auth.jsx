@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom'
 import Login from './Login'
 import Signup from '../verification/Signup'
 import { AuthContext } from '../../context/AuthContext'
+import ResetRequest from '../reset/ResetRequest'
 
 const Auth = () => {
     const [isLoggedIn] = useContext(AuthContext)
@@ -11,6 +12,7 @@ const Auth = () => {
         return(
             <>
                 <Login />
+                <ResetRequest />
                 <Signup />
             </>
         )

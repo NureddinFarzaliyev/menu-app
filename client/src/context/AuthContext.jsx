@@ -8,6 +8,7 @@ export const AuthProvider = ({children}) => {
     const [isVerified, setIsVerified] = useState("pending")
 
     const changeIsLoggedIn = (response) => {
+        // TODO: Handle Errors
         setIsLoggedIn(response.authorized ? true : false)
         setIsVerified(response.verified ? true : false)
     }

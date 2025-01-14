@@ -6,7 +6,8 @@ const Login = () => {
         email: '',
         password: ''
     })
-
+    
+    // TODO: Seperate the logic
     const checkIfLoggedIn = (response) => {
         if(response.errors){
             console.log(response.errors.credentials ? response.errors.credentials : response.errors)
@@ -20,6 +21,7 @@ const Login = () => {
         }
     }
 
+    // TODO: Custom Hooks with loading state and error handling
     const handleLogin = (e) => {
         e.preventDefault()
         sendPostRequest('/auth/login', {email: data.email, password: data.password}, checkIfLoggedIn)    

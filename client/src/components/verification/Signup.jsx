@@ -7,6 +7,7 @@ const Signup = () => {
     password: ''
   })
 
+  // TODO: combine this logic with signip
   const checkIfLoggedIn = (response) => {
     if(response.errors){
         console.log(response.errors.credentials ? response.errors.credentials : response.errors)
@@ -20,6 +21,7 @@ const Signup = () => {
     }
   }
 
+  // TODO: Custom Hooks with loading state and error handling
   const handleSignup = (e) => {
     e.preventDefault()
     sendPostRequest('/auth/signup', {email: data.email, password: data.password}, checkIfLoggedIn)

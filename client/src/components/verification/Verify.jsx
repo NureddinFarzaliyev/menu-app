@@ -8,6 +8,7 @@ const Verify = () => {
     const [verificationMessage, setVerificationMessage] = useState('pending')
 
     const changeVerificationMessage = (verificationResponse) => {
+      // TODO: Handle errors
         setVerificationMessage(verificationResponse.message)
     }
 
