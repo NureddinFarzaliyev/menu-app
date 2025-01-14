@@ -14,18 +14,10 @@ const userSchema = new mongoose.Schema({
         unique: true,
         validate: [isEmail, 'Please enter a valid email']
     },
-    // verifyOTP: {
-    //     type: String,
-    //     default: "",
-    // },
-    // verifyExpires: {
-    //     type: String,
-    //     default: '',
-    // },
-    // verified: {
-    //     type: Boolean,
-    //     default: false,
-    // },
+    verified: {
+        type: Boolean,
+        default: false,
+    },
     menus: {
         type: Array,
         default: [],
