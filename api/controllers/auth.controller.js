@@ -138,8 +138,11 @@ export const resetRequestController = async (req, res) => {
         
         sendEmail(user.email, {
             subject: "Reset Password",
-            text: `Click this link to reset your password: ${process.env.CLIENT_ORIGIN}/reset/${token}`
+            text: `Click this link to reset your password: ${process.env.CLIENT_ORIGIN}/reset/${token}
+            This link will expire in 5 minutes.`
         })
+
+        await user.updateOne({resetExpire: Date.now() + 5 * 60 * 1000})
 
         res.status(200).json({message: "Reset email sent", success: true})
     } catch (error) {
@@ -164,8 +167,17 @@ export const resetController = async (req, res) => {
                 return res.status(404).json({error: "User not found"})
             }
 
+            if(user.resetExpire < Date.now()){
+                return res.status(401).json({error: "Token expired"})
+            }
+
             user.password = req.body.password;
-            await user.save();
+
+            try {
+                await user.save();
+            } catch (error) {
+                res.status(400).json({error: error.message})
+            }
 
             res.status(200).json({message: "Password reset successful", success: true})
         })

@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    resetExpire: {
+        type: Date,
+        default: Date.now(),
+    },
     menus: {
         type: Array,
         default: [],
