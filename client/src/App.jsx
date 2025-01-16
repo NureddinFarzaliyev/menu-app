@@ -7,6 +7,7 @@ import { AuthProvider } from './context/AuthContext'
 import NotVerified from './components/verification/NotVerified'
 import Auth from './components/authentication/Auth'
 import ResetPassword from './components/reset/ResetPassword'
+import Dashboard from './components/dashboard/Dashboard'
 
 const App = () => {
   return (
@@ -17,10 +18,8 @@ const App = () => {
         <Route path="/auth" element={<Auth />} />
 
         <Route path="/dashboard" element={
-          // TODO: All protected routes in dashboard
           <ProtectedRoute>
-            <h1>Dashboard</h1>
-            <Logout />
+            <Dashboard/>
           </ProtectedRoute>
         } />
 

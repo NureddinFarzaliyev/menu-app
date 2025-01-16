@@ -6,6 +6,7 @@ import cors from 'cors';
 
 // Import routes
 import authRoutes from './routes/auth.routes.js';
+import menuRoutes from './routes/menus.routes.js';
 
 // Import Middleware
 import { requireAuth, checkUser } from './middlewares/authMiddleware.js';
@@ -24,9 +25,20 @@ app.use(cors({
 }));
 
 // Routes
+
+// Injects userId to req object if token is valid
 app.get('*', checkUser)
+app.post('*', checkUser)
+
+// Authentication Routes
 app.use('/auth', authRoutes)
+
+// Routes which require authentication
+app.use('/menus', requireAuth, menuRoutes)
 app.get('/', requireAuth, (req, res) => res.send('Hello World!' + req.userId))
+
+// Routes which does not require authentication
+app.get('/test', (req, res) => res.send('Hello World!'))
 
 const startServer = async () => {
     await connectDB();
