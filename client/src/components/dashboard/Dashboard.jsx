@@ -10,9 +10,8 @@ const Dashboard = () => {
         </h1>
 
         <Menus />
-
-
-      {/* <Logout /> */}
+        
+      <Logout />
     </div>
   )
 }

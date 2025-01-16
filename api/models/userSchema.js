@@ -21,10 +21,6 @@ const userSchema = new mongoose.Schema({
     resetExpire: {
         type: Date,
         default: Date.now(),
-    },
-    menus: {
-        type: Array,
-        default: [],
     }
 })
 

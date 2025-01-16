@@ -8,6 +8,7 @@ import NotVerified from './components/verification/NotVerified'
 import Auth from './components/authentication/Auth'
 import ResetPassword from './components/reset/ResetPassword'
 import Dashboard from './components/dashboard/Dashboard'
+import MenuPage from './components/dashboard/MenuPage'
 
 const App = () => {
   return (
@@ -20,6 +21,12 @@ const App = () => {
         <Route path="/dashboard" element={
           <ProtectedRoute>
             <Dashboard/>
+          </ProtectedRoute>
+        } />
+
+        <Route path="/dashboard/menus/:menuId" element={
+          <ProtectedRoute>
+            <MenuPage />
           </ProtectedRoute>
         } />
 

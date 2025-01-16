@@ -29,6 +29,8 @@ app.use(cors({
 // Injects userId to req object if token is valid
 app.get('*', checkUser)
 app.post('*', checkUser)
+app.delete('*', checkUser)
+app.put('*', checkUser)
 
 // Authentication Routes
 app.use('/auth', authRoutes)
