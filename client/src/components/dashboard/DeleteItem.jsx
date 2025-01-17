@@ -2,25 +2,25 @@ import React from 'react'
 import { sendDeleteRequest } from '../../utils/sendDeleteRequest'
 import { useParams } from 'react-router-dom'
 
-const DeleteCategory = ({categoryId, onDelete}) => {
+const DeleteItem = ({onDelete, categoryId, itemId}) => {
 
     const {menuId} = useParams()
 
-    const handleCategoryDelete = (e) => {
+    const handleDelete = (e) => {
         e.preventDefault()
-        sendDeleteRequest(`/content/category/${menuId}/${categoryId}`, (response) => {
+        sendDeleteRequest(`/content/item/${menuId}/${categoryId}/${itemId}`, (response) => {
             if(response.error){
                 console.log(response.error)
             }else{
-                console.log(response)
+                console.log(response.message)
                 onDelete()
             }
         })
     }
 
   return (
-    <button onClick={(e) => {handleCategoryDelete(e)}}>Delete Category</button>
+    <button onClick={(e) => {handleDelete(e)}}>Delete Item</button>
   )
 }
 
-export default DeleteCategory
+export default DeleteItem

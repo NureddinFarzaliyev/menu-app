@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { sendPutRequest } from '../../utils/sendPutRequest'
 import { useParams } from 'react-router-dom'
+import { sendPostRequest } from '../../utils/sendPostRequest'
 
 const CreateItem = ({onCreate, categories}) => {
 
@@ -8,17 +9,18 @@ const CreateItem = ({onCreate, categories}) => {
         name: '',
         price: '',
         description: '',
-        category: ''
     })
+
+    const [category, setCategory] = useState('')
 
     const {menuId} = useParams()
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e, categoryId) => {
         e.preventDefault()
 
-        sendPutRequest(`/menus/${menuId}`, {content: item}, (response) => {
+        sendPostRequest(`/content/item/${menuId}/${category}`, {...item, category}, (response) => {
             if(response.error){
-                console.log(error)
+                console.log(response.error)
             }else{
                 console.log(response)
                 onCreate()
@@ -26,7 +28,6 @@ const CreateItem = ({onCreate, categories}) => {
                     name: '',
                     price: '',
                     description: '',
-                    category: ''
                 })
             }
         })
@@ -43,10 +44,10 @@ const CreateItem = ({onCreate, categories}) => {
             <input value={item.price} type="number" placeholder='price' onChange={(e) => setItem({...item, price: e.target.value})} />
             <input value={item.description} type="text" placeholder='description' onChange={(e) => setItem({...item, description: e.target.value})} />
 
-            <select value={item.category} onChange={(e) => setItem({...item, category: e.target.value})}>
+            <select value={item.category} onChange={(e) => setCategory(e.target.value)}>
                 Select Category
-                {categories && categories.map((category, i) => {
-                    return <option key={i} value={category.name}>{category.name}</option>
+                {categories && categories.map((category) => {
+                    return <option key={category._id} value={category._id}>{category.name}</option>
                 })}
             </select>
             
