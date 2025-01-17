@@ -13,7 +13,7 @@ const menuSchema = new mongoose.Schema({
         type: String,
         default: "",
     },
-    cover: {
+    logo: {
         type: String,
         default: "",
     }
