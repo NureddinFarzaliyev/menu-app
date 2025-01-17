@@ -4,6 +4,9 @@ import { sendGetRequest } from '../../utils/sendGetRequest'
 import DeleteMenu from './DeleteMenu'
 import EditMenu from './EditMenu'
 import UploadImage from '../upload/Upload'
+import CreateCategory from './CreateCategory'
+import Categories from './Categories'
+import CreateItem from './CreateItem'
 
 const MenuPage = () => {
     const {menuId} = useParams()
@@ -41,6 +44,12 @@ const MenuPage = () => {
         <EditMenu onEdit={fetchMenu} />
 
         <UploadImage saveTo={`/menus/${menuId}`} onSave={fetchMenu} />
+
+        <CreateCategory onCreate={fetchMenu} />
+
+        <Categories menu={menu} onEdit={fetchMenu} />
+
+        <CreateItem onCreate={fetchMenu} categories={menu.categories} />
     </div>
   )
 }

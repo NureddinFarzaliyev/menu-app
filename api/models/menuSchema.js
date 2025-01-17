@@ -1,5 +1,36 @@
 import mongoose from "mongoose";
 
+const itemSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: [true, "Name is required"],
+    },
+    price: {
+        type: Number,
+        required: [true, "Price is required"],
+    },
+    description: {
+        type: String,
+        default: "",
+    },
+    image: {
+        type: String,
+        default: "",
+    },
+    category: {
+        type: String,
+        required: [true, "Category is required"],
+    },
+})
+
+const categorySchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: [true, "Name is required"],
+    },
+    items: [itemSchema],
+})
+
 const menuSchema = new mongoose.Schema({
     ownerId: {
         type: String,
@@ -16,7 +47,11 @@ const menuSchema = new mongoose.Schema({
     logo: {
         type: String,
         default: "",
-    }
+    },
+    categories: {
+        type: [categorySchema],
+        default: []
+    },
 })
 
 export const Menu = mongoose.model("Menu", menuSchema);

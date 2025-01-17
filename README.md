@@ -9,3 +9,5 @@ Features:
 - server side & client side route protecting
 - email verification system with nodemailer and JWT
 - Password reset system via email verification (including expire date)
+- Creating / Editing / Deleting different menus
+- Uploading logo for a menu (Cloudinary)

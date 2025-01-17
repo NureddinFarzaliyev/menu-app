@@ -7,6 +7,7 @@ import cors from 'cors';
 // Import routes
 import authRoutes from './routes/auth.routes.js';
 import menuRoutes from './routes/menus.routes.js';
+import contentRoutes from './routes/content.routes.js';
 
 // Import Middleware
 import { requireAuth, checkUser } from './middlewares/authMiddleware.js';
@@ -37,6 +38,7 @@ app.use('/auth', authRoutes)
 
 // Routes which require authentication
 app.use('/menus', requireAuth, menuRoutes)
+app.use('/content', requireAuth, contentRoutes)
 app.get('/', requireAuth, (req, res) => res.send('Hello World!' + req.userId))
 
 // Routes which does not require authentication
