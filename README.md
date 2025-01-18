@@ -11,3 +11,5 @@ Features:
 - Password reset system via email verification (including expire date)
 - Creating / Editing / Deleting different menus
 - Uploading logo for a menu (Cloudinary)
+- Creating Categories 
+- Creating Items in each category with name, price and description
