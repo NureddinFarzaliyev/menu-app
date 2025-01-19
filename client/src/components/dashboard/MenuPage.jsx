@@ -3,10 +3,10 @@ import { useParams, Link } from 'react-router-dom'
 import { sendGetRequest } from '../../utils/sendGetRequest'
 import DeleteMenu from './DeleteMenu'
 import EditMenu from './EditMenu'
-import UploadImage from '../upload/Upload'
 import CreateCategory from './CreateCategory'
 import Categories from './Categories'
 import CreateItem from './CreateItem'
+import UploadMenuImage from '../upload/UploadMenuImage'
 
 const MenuPage = () => {
     const {menuId} = useParams()
@@ -38,12 +38,12 @@ const MenuPage = () => {
       <div>
         {menuId}
       </div>
-      {menu.logo && <img src={menu.logo} alt="Logo" style={{width: "300px"}} />}
+      {menu.imageUrl && <img src={menu.imageUrl} alt="Logo" style={{width: "300px"}} />}
 
         <DeleteMenu />
         <EditMenu onEdit={fetchMenu} />
 
-        <UploadImage saveTo={`/menus/${menuId}`} onSave={fetchMenu} />
+        <UploadMenuImage onSave={fetchMenu} />
 
         <CreateCategory onCreate={fetchMenu} />
 

@@ -13,7 +13,7 @@ const itemSchema = new mongoose.Schema({
         type: String,
         default: "",
     },
-    image: {
+    imageUrl: {
         type: String,
         default: "",
     },
@@ -44,7 +44,7 @@ const menuSchema = new mongoose.Schema({
         type: String,
         default: "",
     },
-    logo: {
+    imageUrl: {
         type: String,
         default: "",
     },
