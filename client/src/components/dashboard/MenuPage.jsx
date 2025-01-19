@@ -7,22 +7,14 @@ import CreateCategory from './CreateCategory'
 import Categories from './Categories'
 import CreateItem from './CreateItem'
 import UploadMenuImage from '../upload/UploadMenuImage'
+import { defaultResponseHandler } from '../../utils/defaultResponseHandler'
 
 const MenuPage = () => {
     const {menuId} = useParams()
     const [menu, setMenu] = useState({})
 
     const fetchMenu = () => {
-        sendGetRequest(`/menus/${menuId}`, (response) => {
-            if(response.error){
-                console.log(response.error)
-                return
-            }
-            if(response.success){
-                console.log(response.menu)
-                setMenu(response.menu)
-            }
-        })
+      sendGetRequest(`/menus/${menuId}`, (res) => defaultResponseHandler(res, (res) => {setMenu(res.menu)}))
     }
 
     useEffect(() => {

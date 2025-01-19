@@ -39,10 +39,10 @@ app.use('/auth', authRoutes)
 // Routes which require authentication
 app.use('/menus', requireAuth, menuRoutes)
 app.use('/content', requireAuth, contentRoutes)
-app.get('/', requireAuth, (req, res) => res.send('Hello World!' + req.userId))
+// app.get('/', requireAuth, (req, res) => res.send('Hello World!' + req.userId))
 
 // Routes which does not require authentication
-app.get('/test', (req, res) => res.send('Hello World!'))
+// app.get('/test', (req, res) => res.send('Hello World!'))
 
 const startServer = async () => {
     await connectDB();

@@ -1,8 +1,10 @@
 export const defaultResponseHandler = (response, callback) => {
     if(response.error){
         console.log(response.error)
-    }else {
+    }else if (response.success || response.message){ 
         console.log(response)
-        if(callback) callback()
+        if(callback) callback(response)
+    }else{
+        console.log('unexpected response', response)
     }
 }

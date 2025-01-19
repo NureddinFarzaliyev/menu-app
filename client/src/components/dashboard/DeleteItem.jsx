@@ -1,21 +1,14 @@
 import React from 'react'
 import { sendDeleteRequest } from '../../utils/sendDeleteRequest'
 import { useParams } from 'react-router-dom'
+import { defaultResponseHandler } from '../../utils/defaultResponseHandler'
 
 const DeleteItem = ({onDelete, categoryId, itemId}) => {
-
     const {menuId} = useParams()
 
     const handleDelete = (e) => {
         e.preventDefault()
-        sendDeleteRequest(`/content/item/${menuId}/${categoryId}/${itemId}`, (response) => {
-            if(response.error){
-                console.log(response.error)
-            }else{
-                console.log(response.message)
-                onDelete()
-            }
-        })
+        sendDeleteRequest(`/content/item/${menuId}/${categoryId}/${itemId}`, (res) => defaultResponseHandler(res, onDelete))
     }
 
   return (

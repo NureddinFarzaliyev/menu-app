@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import { sendPostRequest } from '../../utils/sendPostRequest'
+import { defaultResponseHandler } from '../../utils/defaultResponseHandler'
 
 const ResetRequest = () => {
 
     const [email, setEmail] = useState('')
 
     const handleReset = (e) => {
-        e.preventDefault()
-        sendPostRequest('/auth/reset', {email}, console.log)
+      e.preventDefault()
+      sendPostRequest('/auth/reset', {email}, (res) => defaultResponseHandler(res))
     }
 
   return (

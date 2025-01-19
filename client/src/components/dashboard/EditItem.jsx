@@ -19,7 +19,6 @@ const EditItem = ({categoryId, itemId, onEdit}) => {
         e.preventDefault()
         
         let imageUrl = ''
-
         if(file) imageUrl = await uploadToCloudinary(file);
 
         sendPutRequest(`/content/item/${menuId}/${categoryId}/${itemId}`, {

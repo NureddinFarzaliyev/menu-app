@@ -1,27 +1,21 @@
 import React, { useState } from 'react'
-import { sendPutRequest } from '../../utils/sendPutRequest'
 import { useParams } from 'react-router-dom'
 import { sendPostRequest } from '../../utils/sendPostRequest'
+import { defaultResponseHandler } from '../../utils/defaultResponseHandler'
 
 const CreateCategory = ({onCreate}) => {
-
     const {menuId} = useParams()
-
     const [categoryName, setCategoryName] = useState('')
+
+    const afterCreate = () => {
+        onCreate()
+        setCategoryName('')
+    }
 
     const handleCreateCategory = (e) => {
         e.preventDefault()
-        sendPostRequest(`/content/category/${menuId}`, {category: categoryName}, (response) => {
-            if(response.error){
-                console.log(response.error)
-            }else{
-                onCreate()
-                console.log(response)
-                setCategoryName('')
-            }
-        })
+        sendPostRequest(`/content/category/${menuId}`, {category: categoryName}, (res) => defaultResponseHandler(res, afterCreate))
     }
-
 
   return (
     <div>

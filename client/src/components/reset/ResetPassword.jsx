@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import { sendPostRequest } from '../../utils/sendPostRequest'
 import { useParams } from 'react-router-dom'
+import { defaultResponseHandler } from '../../utils/defaultResponseHandler'
 
 const ResetPassword = () => {
 
@@ -9,8 +10,12 @@ const ResetPassword = () => {
     const {token} = useParams()
 
     const handleReset = (e) => {
-        e.preventDefault()
-        sendPostRequest(`/auth/reset/${token}`, {password}, console.log)
+      e.preventDefault()
+      sendPostRequest(`/auth/reset/${token}`, {password}, (res) => defaultResponseHandler(res, (res) => {
+        if(res.success){
+          window.location.href = '/auth'
+        }
+      }))
     }
 
   return (

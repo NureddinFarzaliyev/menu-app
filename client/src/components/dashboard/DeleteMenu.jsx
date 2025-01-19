@@ -1,22 +1,17 @@
 import React from 'react'
 import { sendDeleteRequest } from '../../utils/sendDeleteRequest'
 import { useParams } from 'react-router-dom'
+import { defaultResponseHandler } from '../../utils/defaultResponseHandler'
 
 const DeleteMenu = () => {
-
     const {menuId} = useParams()
 
+    const onDelete = () => {
+      window.location.href = '/dashboard'
+    }
+
     const handleDelete = () => {
-        sendDeleteRequest(`/menus/${menuId}`, (response) => {
-            if(response.error){
-                console.log(response.error)
-                return
-            }
-            if(response.success){
-                console.log(response.message)
-                window.location.href = '/dashboard'
-            }
-        })
+      sendDeleteRequest(`/menus/${menuId}`, (res) => defaultResponseHandler(res, onDelete))
     }
 
   return (

@@ -17,7 +17,7 @@ export const createCategoryController = async (req, res) => {
         if(menu.categories.every(category => category.name !== req.body.category)) {
             menu.categories.push({name: req.body.category})
             await menu.save();
-            res.json({message: "Category created successfully"})
+            res.json({message: "Category created successfully", success: true})
         }else{
             return res.status(400).json({error: "Category already exists"})
         }
@@ -44,7 +44,7 @@ export const editCategoryController = async (req, res) => {
             category.name = req.body.category
 
             await menu.save();
-            res.json({message: "Category edited successfully"})
+            res.json({message: "Category edited successfully", success: true})
         }else{
             return res.status(400).json({error: "Category already exists"})
         }
@@ -97,7 +97,7 @@ export const createItemController = async (req, res) => {
 
         category.items.push({...req.body})
         await menu.save();
-        res.json({message: "Item created successfully"})
+        res.json({message: "Item created successfully", success: true})
     } catch (error) {
         res.status(500).json({error: error.message})
     }
@@ -130,7 +130,7 @@ export const editItemController = async (req, res) => {
         Object.assign(item, req.body)
 
         await menu.save();
-        res.json({message: "Item edited successfully"})
+        res.json({message: "Item edited successfully", success: true})
     } catch (error) {
         res.status(500).json({error: error.message})
     }
@@ -157,7 +157,7 @@ export const deleteItemController = async (req, res) => {
         category.items = category.items.filter(item => item._id.toString() !== req.params.itemId)
         
         await menu.save();
-        res.json({message: "Item deleted successfully"})
+        res.json({message: "Item deleted successfully", success: true})
     } catch (error) {
         res.status(500).json({error: error.message})
     }
