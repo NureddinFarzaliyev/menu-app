@@ -42,7 +42,9 @@ const menuSchema = new mongoose.Schema({
     },
     url: {
         type: String,
-        default: "",
+        default: null,
+        unique: true,
+        sparse: true,
     },
     imageUrl: {
         type: String,

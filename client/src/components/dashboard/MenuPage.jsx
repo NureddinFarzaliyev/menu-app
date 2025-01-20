@@ -8,6 +8,7 @@ import Categories from './Categories'
 import CreateItem from './CreateItem'
 import UploadMenuImage from '../upload/UploadMenuImage'
 import { defaultResponseHandler } from '../../utils/defaultResponseHandler'
+import ShareMenu from './ShareMenu'
 
 const MenuPage = () => {
     const {menuId} = useParams()
@@ -34,11 +35,11 @@ const MenuPage = () => {
 
         <DeleteMenu />
         <EditMenu onEdit={fetchMenu} />
-
         <UploadMenuImage onSave={fetchMenu} />
+        <ShareMenu onEdit={fetchMenu} menuData={menu} />
+
 
         <CreateCategory onCreate={fetchMenu} />
-
         <Categories menu={menu} onEdit={fetchMenu} />
 
         <CreateItem onCreate={fetchMenu} categories={menu.categories} />
