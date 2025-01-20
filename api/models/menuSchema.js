@@ -42,9 +42,11 @@ const menuSchema = new mongoose.Schema({
     },
     url: {
         type: String,
-        default: null,
-        unique: true,
-        sparse: true,
+        default: '',
+    },
+    isPublic: {
+        type: Boolean,
+        default: false,
     },
     imageUrl: {
         type: String,
@@ -55,5 +57,6 @@ const menuSchema = new mongoose.Schema({
         default: []
     },
 })
+
 
 export const Menu = mongoose.model("Menu", menuSchema);

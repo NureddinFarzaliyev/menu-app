@@ -58,6 +58,12 @@ export const editMenuController = async (req, res) => {
             return res.status(404).json({ error: "Menu not found (unauthorized)" })
         }
 
+        const existingUrl = await Menu.findOne({ url: req.body.url })
+
+        if(existingUrl){
+            return res.status(400).json({ error: "URL already exists" })
+        }
+
         const updatedMenu = await Menu.findByIdAndUpdate(req.params.menuId, req.body, { new: true });
 
         res.json({ updatedMenu, success: true })
