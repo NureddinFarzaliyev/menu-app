@@ -14,3 +14,5 @@ Features:
 - Creating, Editing, Deleting Categories 
 - Creating, Editing, Deleting Items in each category with name, price and description
 - Adding, Changing, Deleting images of items
+- Making menu private/public
+- Visiting public menus
