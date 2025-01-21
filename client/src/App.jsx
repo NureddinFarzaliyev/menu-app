@@ -1,5 +1,4 @@
 import React from 'react'
-import Logout from './components/authentication/Logout'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Verify from './components/verification/Verify'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -9,6 +8,7 @@ import Auth from './components/authentication/Auth'
 import ResetPassword from './components/reset/ResetPassword'
 import Dashboard from './components/dashboard/Dashboard'
 import MenuPage from './components/dashboard/MenuPage'
+import Site from './components/site/Site'
 
 const App = () => {
   return (
@@ -29,6 +29,8 @@ const App = () => {
             <MenuPage />
           </ProtectedRoute>
         } />
+
+        <Route path='/site/:url' element={<Site />} />
 
         <Route path="/verify/:token" element={<Verify />} />
         <Route path="/reset/:token" element={<ResetPassword />} />

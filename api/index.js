@@ -8,6 +8,7 @@ import cors from 'cors';
 import authRoutes from './routes/auth.routes.js';
 import menuRoutes from './routes/menus.routes.js';
 import contentRoutes from './routes/content.routes.js';
+import siteRoutes from './routes/site.routes.js';
 
 // Import Middleware
 import { requireAuth, checkUser } from './middlewares/authMiddleware.js';
@@ -42,7 +43,7 @@ app.use('/content', requireAuth, contentRoutes)
 // app.get('/', requireAuth, (req, res) => res.send('Hello World!' + req.userId))
 
 // Routes which does not require authentication
-// app.get('/test', (req, res) => res.send('Hello World!'))
+app.use('/site', siteRoutes)
 
 const startServer = async () => {
     await connectDB();

@@ -27,9 +27,9 @@ const ShareMenu = ({onEdit, menuData}) => {
 
         {menuData?.isPublic ? (
             <>
-                <p>Menu is shared with the url: <a href={`/${menuData.url}`} target='_blank'>
-                {`${import.meta.env.VITE_CLIENT_ORIGIN}/${menuData.url}`}</a></p>
-                <img src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${`${import.meta.env.VITE_CLIENT_ORIGIN}/${menuData.url}`}`} alt="" /> <br />
+                <p>Menu is shared with the url: <a href={`/site/${menuData.url}`} target='_blank'>
+                {`${import.meta.env.VITE_CLIENT_ORIGIN}/site/${menuData.url}`}</a></p>
+                <img src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${`${import.meta.env.VITE_CLIENT_ORIGIN}/site/${menuData.url}`}`} alt="" /> <br />
             </>
         ) : (
             <p>Menu is not public. Write the url below and share the menu.</p>
