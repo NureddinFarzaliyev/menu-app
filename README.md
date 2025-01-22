@@ -1,3 +1,5 @@
+![Tech Stack](https://skills-icons.vercel.app/api/icons?i=tailwindcss,js,react,mongodb,expressjs,nodejs,jwt)
+
 Features: 
 
 - Routing & Controllers for API structure
